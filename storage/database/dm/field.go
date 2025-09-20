@@ -98,7 +98,7 @@ func NewFieldType(typ database.ColumnType) *FieldType {
 	case "DATE", "TIME", "DATETIME", "TIMESTAMP":
 		f.goType = database.GoTypeTime
 	default:
-		f.goType = database.GoTypeString
+		f.goType = database.GoTypeUnknown
 	}
 	return f
 }
