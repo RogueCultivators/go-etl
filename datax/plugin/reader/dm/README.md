@@ -51,7 +51,7 @@ Configuring a job to synchronize data from a DM database to another system:
 
 #### url
 
-* Description: Specifies the connection information for the remote DM database. The basic format is: `dm://username:password@ip:port/database`. This configuration separates the username and password for easier encryption.
+* Description: Specifies the connection information for the remote DM database. The basic format is: `ip:port/database`. This configuration separates the username and password for easier encryption.
 * Required: Yes
 * Default: None
 
