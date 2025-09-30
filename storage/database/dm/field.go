@@ -16,6 +16,7 @@ package dm
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/Breeze0806/go-etl/element"
@@ -90,7 +91,7 @@ func NewFieldType(typ database.ColumnType) *FieldType {
 		f.goType = database.GoTypeInt64
 	case "NUMERIC", "NUMBER", "DECIMAL", "DEC", "FLOAT", "DOUBLE", "REAL", "DOUBLE PRECISION":
 		f.goType = database.GoTypeString // DECIMAL使用字符串以保证精度
-	case "CHAR", "CHARACTER", "VARCHAR", "TEXT", "CLOB", "LONGVARCHAR":
+	case "CHAR", "CHARACTER", "VARCHAR2", "VARCHAR", "TEXT", "CLOB", "LONGVARCHAR":
 		f.goType = database.GoTypeString
 	case "BINARY", "VARBINARY", "BLOB", "BFILE", "IMAGE", "LONGVARBINARY":
 		f.goType = database.GoTypeBytes
@@ -127,7 +128,7 @@ func NewScanner(f *Field) *Scanner {
 func (s *Scanner) Scan(src any) (err error) {
 	var cv element.ColumnValue
 	byteSize := element.ByteSize(src)
-	switch s.f.Type().DatabaseTypeName() {
+	switch strings.ToUpper(s.f.Type().DatabaseTypeName()) {
 	case "BIT", "BOOLEAN", "BOOL":
 		switch data := src.(type) {
 		case nil:
@@ -178,7 +179,7 @@ func (s *Scanner) Scan(src any) (err error) {
 		default:
 			return fmt.Errorf("src is %v(%T), but not %v", src, src, element.TypeDecimal)
 		}
-	case "CHAR", "CHARACTER", "VARCHAR", "TEXT", "CLOB", "LONGVARCHAR":
+	case "CHAR", "CHARACTER", "VARCHAR", "VARCHAR2", "TEXT", "CLOB", "LONGVARCHAR":
 		switch data := src.(type) {
 		case nil:
 			cv = element.NewNilStringColumnValue()

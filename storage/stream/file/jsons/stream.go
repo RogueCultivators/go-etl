@@ -16,7 +16,6 @@ package jsons
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 
@@ -27,7 +26,7 @@ import (
 
 func init() {
 	var creator Creator
-	file.RegisterCreator("parquet", &creator)
+	file.RegisterCreator("jsons", &creator)
 }
 
 type MinimalRecord struct {
@@ -97,7 +96,6 @@ func (w *Writer) Write(record element.Record) (err error) {
 			d[col.Name()] = nil
 			continue
 		}
-		fmt.Println(col.Type())
 		switch col.Type() {
 		case element.TypeBigInt:
 			val, err := col.AsBigInt()
@@ -153,6 +151,7 @@ func (w *Writer) Write(record element.Record) (err error) {
 		log.Fatal(err)
 	}
 	_, err = w.file.Write(jsonData)
+	_, err = w.file.Write([]byte("\n"))
 	// 写入数据
 	return err
 }

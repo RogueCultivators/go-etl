@@ -16,7 +16,6 @@ package jsons
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/Breeze0806/go-etl/config"
 	"github.com/Breeze0806/go-etl/datax/plugin/writer/file"
@@ -37,7 +36,6 @@ type Config struct {
 
 // NewConfig - A function or method that retrieves CSV input configuration settings from a JSON configuration file (conf).
 func NewConfig(conf *config.JSON) (*Config, error) {
-	fmt.Println(conf.String())
 	c := &Config{}
 	if err := json.Unmarshal([]byte(conf.String()), c); err != nil {
 		return nil, err
