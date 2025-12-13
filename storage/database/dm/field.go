@@ -84,7 +84,7 @@ func NewFieldType(typ database.ColumnType) *FieldType {
 	f := &FieldType{
 		BaseFieldType: database.NewBaseFieldType(typ),
 	}
-	switch f.DatabaseTypeName() {
+	switch strings.ToUpper(f.DatabaseTypeName()) {
 	case "BIT", "BOOLEAN", "BOOL":
 		f.goType = database.GoTypeBool
 	case "INTEGER", "INT", "BIGINT", "TINYINT", "SMALLINT", "BYTE":
